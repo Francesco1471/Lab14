@@ -23,7 +23,6 @@ class View(ft.UserControl):
         # title
         self._title = ft.Text("TdP Lab 14 - simulazione esame", color="blue", size=24)
         self._page.controls.append(self._title)
-
         self._ddStore = ft.Dropdown(label="Store")
         self._controller.fillDD()
         self._txtIntK = ft.TextField(label="Numero giorni massimo K")

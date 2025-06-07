@@ -1,6 +1,6 @@
 from database.DB_connect import DBConnect
 from model.Ordine import Ordine
-
+from model.arco import Arco
 
 class DAO():
 
@@ -13,7 +13,7 @@ class DAO():
                     from stores s """
         cursor.execute(query)
         for row in cursor:
-            result.append(row["store_name"])
+            result.append((row["store_name"], row["store_id"]))
         cnx.close()
         cursor.close()
         return result
@@ -35,7 +35,7 @@ class DAO():
         return result
 
     @staticmethod
-    def get_all_edges(store, interval):
+    def get_all_edges(store, interval, idMap):
         cnx = DBConnect.get_connection()
         cursor = cnx.cursor(dictionary=True)
         result = []
@@ -46,7 +46,7 @@ class DAO():
         													    (select sum(t.quantity)
         														from order_items t
         														where t.order_id = o2.order_id)	
-        													 as peso
+        													    as weight
         from orders o1, orders o2
         where o2.store_id = %s
         and o1.store_id = %s
@@ -56,7 +56,7 @@ class DAO():
 
         cursor.execute(query, (store,store,interval))
         for row in cursor:
-            result.append(Ordine(**row))
+            result.append(Arco(idMap[row["Ordine1"]], idMap[row["Ordine2"]], row["weight"]))
         cnx.close()
         cursor.close()
         return result
