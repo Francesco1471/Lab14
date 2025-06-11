@@ -1,7 +1,7 @@
 from database.DB_connect import DBConnect
 from model.Ordine import Ordine
 from model.arco import Arco
-
+from model.store import Store
 class DAO():
 
     @staticmethod
@@ -13,7 +13,7 @@ class DAO():
                     from stores s """
         cursor.execute(query)
         for row in cursor:
-            result.append((row["store_name"], row["store_id"]))
+            result.append(Store(**row))
         cnx.close()
         cursor.close()
         return result
@@ -39,22 +39,18 @@ class DAO():
         cnx = DBConnect.get_connection()
         cursor = cnx.cursor(dictionary=True)
         result = []
-        query = """select o1.order_id as Ordine1, o2.order_id as Ordine2, (select sum(t.quantity)
-        														from order_items t
-        														where t.order_id = o1.order_id) 	
-        													    + 
-        													    (select sum(t.quantity)
-        														from order_items t
-        														where t.order_id = o2.order_id)	
-        													    as weight
-        from orders o1, orders o2
-        where o2.store_id = %s
-        and o1.store_id = %s
-        and o1.order_id <> o2.order_id 
-        and o1.order_date > o2.order_date 
-        and ABS(datediff(o1.order_date, o2.order_date)) < %s"""
+        query = """select DISTINCT o1.order_id as Ordine1, o2.order_id as Ordine2, 
+                                   count(oi.quantity+ oi2.quantity) as weight
+                from orders o1, orders o2, order_items oi, order_items oi2 
+                where o1.store_id= %s
+                and o1.store_id=o2.store_id 
+                and o1.order_date > o2.order_date
+                and oi.order_id = o1.order_id
+                and oi2.order_id  = o2.order_id
+                and DATEDIFF(o1.order_Date, o2.order_date) < %s
+                group by o1.order_id, o2.order_id"""
 
-        cursor.execute(query, (store,store,interval))
+        cursor.execute(query, (store,interval))
         for row in cursor:
             result.append(Arco(idMap[row["Ordine1"]], idMap[row["Ordine2"]], row["weight"]))
         cnx.close()

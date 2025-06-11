@@ -5,7 +5,7 @@ myModel = Model()
 # print(myModel.fillDD())
 a = myModel.fillDD()
 for b in a:
-    print(b[1])
+    print(b)
 myModel.get_all_nodes(3)
 
 idMap = myModel._idMap
