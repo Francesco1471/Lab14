@@ -1,0 +1,32 @@
+DATABASE BIKE_STORE_FULL:
+
+
+ORDERS: tabella principale, IDKEY = order_id ---> contiene tutti gli ordini effettuati con tutte
+le relative informazioni: clienti, data (dell'ordine/della spedizione/richiesta), store, staff, oggetti dell'ordine
+collegabile per trovare gli items (order_items), i clienti, ecc
+
+ORDER_ITEMS: ad ogni ordine della tabella orders corrispondono diverse righe, 1 per prodotto acquistato.
+L'item_id rappresenta solo nello stesso ordine il prodotto n-esimo acquistato (es.: order_id = 1 ha 5
+prodotti, il primo avrà item_id = 1, il secondo item_id = 2, ecc).
+Il product id rappresenta il vero collegamento coi prodotti. La colonna quantità indica quanto di ogni prodotto
+è stato acquistato
+
+PRODUCT: tabella con i prodotti, IDKEY = product_id, contiene informazioni sui prodotti come nome,
+prezzo, brand (tabella BRANDS), categoria (tabella CATEGORIA)
+
+STORES: i 3 negozi dal quale si possono effettuare acquisti
+
+CUSTOMERS: tabella che contiene i dati dei clienti. Son solo dati personali collegati eventualmente dalla
+tabella orders via customer_id che è l'IDKEY
+
+STAFF: tabella con informazioni sullo staff, info personali + store in cui lavorano + relazione gerarchica
+
+STOCKS: quantità di prodotti presenti in magazzino
+
+
+
+
+
+
+
+
