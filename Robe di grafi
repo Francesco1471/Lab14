@@ -1,0 +1,61 @@
+AGGIUNTA NODI:
+G.add_nodes_from()
+
+AGGIUNTA ARCHI:
+G.add_edges_from()
+G.add_weighted_edges_from()
+
+INFO GRAFO:
+G.number_of_nodes()
+G.number_of_edges()
+
+INFO DI UN NODO:
+G.degree(n)                # grado del nodo n
+G.degree()                 # grado di tutti i nodi
+G.in_degree(n)             # solo per DiGraph
+G.out_degree(n)            # solo per DiGraph
+
+SUCCESSORI E PREDECESSORI:
+G.successors(n)            # solo per DiGraph
+G.predecessors(n)          # solo per DiGraph
+
+COMPONENTI CONNESSE GRAFO NON ORIENTATO:
+nx.connected_components(G)
+nx.number_connected_components(G)
+
+COMPONENTI CONNESSE GRAFO ORIENTATO (connessioni forti/deboli):
+nx.strongly_connected_components(G)
+nx.weakly_connected_components(G)
+nx.number_strongly_connected_components(G)
+nx.number_weakly_connected_components(G)
+
+CAMMINO MINIMO:
+nx.shortest_path(G, source, target)
+nx.shortest_path_length(G, source, target)
+nx.all_shortest_paths(G, source, target)
+
+DIJKSTRA (cammino minimo con pesi):
+nx.dijkstra_path(G, source, target, weight='peso')
+nx.dijkstra_path_length(G, source, target, weight='peso')
+
+CAMMINO PIù LUNGO (DAG):
+nx.dag_longest_path(G)
+nx.dag_longest_path_length(G)
+
+ALBERO COPERTURA MINIMA:
+nx.minimum_spanning_tree(G)
+
+RICERCA IN AMPIEZZA ---> BFS TREE:
+nx.bfs_edges(G, source)
+nx.bfs_tree(G, source)
+nx.bfs_successors(G, source)
+
+RICERCA IN PROFONDITA' ---> DFS TREE:
+nx.dfs_edges(G, source)
+nx.dfs_tree(G, source)
+nx.dfs_successors(G, source)
+
+CICLI:
+nx.find_cycle(G)                  # cerca un ciclo
+nx.simple_cycles(G)               # tutti i cicli semplici (solo DiGraph)
+nx.cycle_basis(G)                 # tutti i cicli di base (non orientato)
