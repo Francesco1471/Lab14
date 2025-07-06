@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from model.Ordine import Ordine
+from model.ordine import Ordine
 
 
 @dataclass

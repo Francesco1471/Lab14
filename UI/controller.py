@@ -42,14 +42,25 @@ class Controller:
             opzione = ft.dropdown.Option(text=nodo.order_id)
             self._view._ddNode.options.append(opzione)
         self._view._btnCerca.disabled = False
+        self._view._btnRicorsione.disabled = False
         self._view.update_page()
 
-    def handleCerca(self, e):
-        pass
 
     def handleRicorsione(self, e):
-        pass
+        bestpath, bestscore = self._model.getBestPath(self._view._ddNode.value)
+        self._view.txt_result.controls.clear()
+        self._view.txt_result.controls.append(
+            ft.Text(f"Trovato un cammino che parte da {self._view._ddNode.value} "
+                    f"con somma dei pesi uguale a {bestscore}."))
 
+        print(bestpath)
+        for v in bestpath:
+            self._view.txt_result.controls.append(ft.Text(f"{v}"))
+        self._view.update_page()
+
+
+
+    #ricordati di chiamare la funzione nella view!!!
     def fillDD(self):
         stores = self._model.fillDD()
         for store in stores:

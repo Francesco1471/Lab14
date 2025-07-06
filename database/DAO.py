@@ -1,5 +1,5 @@
 from database.DB_connect import DBConnect
-from model.Ordine import Ordine
+from model.ordine import Ordine
 from model.arco import Arco
 from model.store import Store
 class DAO():
